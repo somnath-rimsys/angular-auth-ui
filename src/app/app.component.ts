@@ -6,5 +6,20 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'signin-signup-ui';
+  currentSection: 'login'|'register' = 'login';
+
+  changeSection(event: any) {
+    event.preventDefault();
+    this.currentSection = this.currentSection === 'login' ? 'register': 'login';
+  }
+
+  login(event: any) {
+    event.preventDefault();
+    console.log("Login")
+  }
+
+  register(event: any) {
+    event.preventDefault();
+    console.log("Register")
+  }
 }
