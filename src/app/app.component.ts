@@ -1,25 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  currentSection: 'login'|'register' = 'login';
+export class AppComponent implements OnInit{
+  constructor(private route:Router) {}
 
-  changeSection(event: any) {
-    event.preventDefault();
-    this.currentSection = this.currentSection === 'login' ? 'register': 'login';
-  }
-
-  login(event: any) {
-    event.preventDefault();
-    console.log("Login")
-  }
-
-  register(event: any) {
-    event.preventDefault();
-    console.log("Register")
+  ngOnInit(): void {
+    if(!localStorage.getItem('token')) {
+      this.route.navigate(['/login'])
+    }
   }
 }

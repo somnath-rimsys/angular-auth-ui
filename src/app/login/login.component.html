@@ -1,34 +1,97 @@
-<div class="container">
-	<div class="screen">
-		<div class="screen__content">
-			<form class="login">
-				<div class="login__field">
-					<i class="login__icon fas fa-user"></i>
-					<input type="text" class="login__input" placeholder="User name / Email">
-				</div>
-				<div class="login__field">
-					<i class="login__icon fas fa-lock"></i>
-					<input type="password" class="login__input" placeholder="Password">
-				</div>
-				<button class="button login__submit">
-					<span class="button__text">Log In Now</span>
-					<i class="button__icon fas fa-chevron-right"></i>
-				</button>
-			</form>
-			<div class="social-login">
-				<h3>log in via</h3>
-				<div class="social-icons">
-					<a href="#" class="social-login__icon fab fa-instagram"></a>
-					<a href="#" class="social-login__icon fab fa-facebook"></a>
-					<a href="#" class="social-login__icon fab fa-twitter"></a>
-				</div>
-			</div>
-		</div>
-		<div class="screen__background">
-			<span class="screen__background__shape screen__background__shape4"></span>
-			<span class="screen__background__shape screen__background__shape3"></span>
-			<span class="screen__background__shape screen__background__shape2"></span>
-			<span class="screen__background__shape screen__background__shape1"></span>
-		</div>
-	</div>
+<div class="container" [ngSwitch]="currentSection">
+  <div class="login-container" *ngSwitchCase="'login'">
+    <h1 class="container-title">SignIn</h1>
+    <form class="login-form form" [formGroup]="loginForm" (ngSubmit)="login()">
+      <div class="form-group">
+        <i class="login__icon fas fa-envelope"></i>
+        <input
+          type="email"
+          placeholder="Username / Email"
+          autocomplete="none"
+          formControlName="email"
+          class="form-control">
+      </div>
+      <div class="form-group">
+        <i class="login__icon fas fa-lock"></i>
+        <input
+          type="password"
+          placeholder="Password"
+          formControllName="password"
+          class="form-control">
+      </div>
+      <div class="form-group">
+        <div class="form-action-container">
+          <button type="submit" class="login-btn btn" [disabled]="loginForm.invalid">Login</button>
+          <a href="#" class="create-account-link" (click)="changeSection($event)">
+            Create new account
+          </a>
+        </div>
+      </div>
+      <div class="divider">
+        <span></span>
+        <span>
+          <div></div>
+        </span>
+        <span></span>
+      </div>
+      <div class="social-login-container">
+        <div class="social-login-icons">
+          <i class="fab fa-google-plus-g"></i>
+          <i class="fab fa-facebook-f"></i>
+          <i class="fab fa-linkedin"></i>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="register-container" *ngSwitchCase="'register'">
+    <h1 class="container-title">SignUp</h1>
+    <form class="register-form form" [formGroup]="registrationForm" (ngSubmit)="register()">
+      <div class="form-group">
+        <i class="register__icon fas fa-user"></i>
+        <input
+          type="text"
+          placeholder="Full name"
+          autocomplete="none"
+          formControlName="name"/>
+      </div>
+      <div class="form-group">
+        <i class="register__icon fas fa-envelope"></i>
+        <input
+          type="email"
+          placeholder="Username / Email"
+          autocomplete="none"
+          formControlName="email"/>
+      </div>
+      <div class="form-group">
+        <i class="register__icon fas fa-lock"></i>
+        <input
+          type="password"
+          placeholder="Password"
+          formControlName="password"/>
+      </div>
+      <div class="form-group">
+        <div class="form-action-container">
+          <button type="submit" class="register-btn btn">Submit</button>
+          <a href="#" class="login-link" (click)="changeSection($event)">
+            Login instead
+          </a>
+        </div>
+      </div>
+      <div class="divider">
+        <span></span>
+        <span>
+          <div></div>
+        </span>
+        <span></span>
+      </div>
+      <div class="social-login-container">
+        <div class="social-login-icons">
+          <i class="fab fa-google-plus-g" (click)="googleLogin()"></i>
+          <i class="fab fa-facebook-f" (click)="facebookLogin()"></i>
+          <i class="fab fa-linkedin" (click)="linkedinlogin()"></i>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
