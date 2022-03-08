@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from "@angular/forms";
+import {
+  SocialAuthService,
+  GoogleLoginProvider,
+  SocialUser,
+} from 'angularx-social-login';
 
 @Component({
   selector: 'app-login',
@@ -11,8 +16,9 @@ export class LoginComponent implements OnInit {
   currentSection: 'login'|'register' = 'login';
   loginForm: any;
   registrationForm: any;
+  socialUser!: SocialUser;
 
-  constructor(private fb:FormBuilder) {
+  constructor(private fb:FormBuilder, private socialAuthService: SocialAuthService) {
 
   }
 
@@ -27,6 +33,11 @@ export class LoginComponent implements OnInit {
       email: [''],
       password: ['']
     })
+
+    this.socialAuthService.authState.subscribe((user) => {
+      this.socialUser = user;
+      console.log(this.socialUser);
+    });
   }
 
 
@@ -44,7 +55,10 @@ export class LoginComponent implements OnInit {
   }
 
   googleLogin() {
-
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
+    .catch(err=>{
+      console.error(err);
+    })
   }
 
   facebookLogin() {
