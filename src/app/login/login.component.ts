@@ -5,6 +5,7 @@ import {
   GoogleLoginProvider,
   SocialUser,
 } from 'angularx-social-login';
+import { AuthServiceService } from '../Services/auth-service.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,11 @@ export class LoginComponent implements OnInit {
   registrationForm: any;
   socialUser!: SocialUser;
 
-  constructor(private fb:FormBuilder, private socialAuthService: SocialAuthService) {
+  constructor(
+    private fb:FormBuilder,
+    private socialAuthService: SocialAuthService,
+    private authService: AuthServiceService
+  ) {
 
   }
 
@@ -31,7 +36,8 @@ export class LoginComponent implements OnInit {
     this.registrationForm = this.fb.group({
       name: [''],
       email: [''],
-      password: ['']
+      password: [''],
+      password_confirmation: [''],
     })
 
     this.socialAuthService.authState.subscribe((user) => {
@@ -52,6 +58,9 @@ export class LoginComponent implements OnInit {
 
   register() {
     console.log(this.registrationForm.value);
+    this.authService.createUser(this.registrationForm.value).subscribe((data) => {
+      console.log(data)
+    })
   }
 
   googleLogin() {
